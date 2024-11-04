@@ -16,5 +16,6 @@ namespace KG_5
         {
             InitializeComponent();
         }
+
     }
 }
