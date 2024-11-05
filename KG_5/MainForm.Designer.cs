@@ -28,19 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.uploadFile_button = new System.Windows.Forms.Button();
             this.gist_R_button = new System.Windows.Forms.Button();
             this.gist_G_button = new System.Windows.Forms.Button();
             this.gist_B_button = new System.Windows.Forms.Button();
-            this.gist_Bright_button = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gist_Brightness_button = new System.Windows.Forms.Button();
+            this.groupBox_gist = new System.Windows.Forms.GroupBox();
             this.trackBar_Brightness = new System.Windows.Forms.TrackBar();
             this.label_Brightness = new System.Windows.Forms.Label();
             this.trackBar_Сontrast = new System.Windows.Forms.TrackBar();
             this.label_Сontrast = new System.Windows.Forms.Label();
-            this.groupBox1.SuspendLayout();
+            this.button_Binarization = new System.Windows.Forms.Button();
+            this.button_GrayShades = new System.Windows.Forms.Button();
+            this.button_Negative = new System.Windows.Forms.Button();
+            this.button_Reset = new System.Windows.Forms.Button();
+            this.pictureBox_image = new System.Windows.Forms.PictureBox();
+            this.trackBar_Сhange = new System.Windows.Forms.TrackBar();
+            this.gist = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.groupBox_gist.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_Brightness)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_Сontrast)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_image)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar_Сhange)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gist)).BeginInit();
             this.SuspendLayout();
             // 
             // uploadFile_button
@@ -48,12 +60,13 @@
             this.uploadFile_button.BackColor = System.Drawing.Color.DarkOrange;
             this.uploadFile_button.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.uploadFile_button.ForeColor = System.Drawing.Color.Navy;
-            this.uploadFile_button.Location = new System.Drawing.Point(965, 250);
+            this.uploadFile_button.Location = new System.Drawing.Point(952, 250);
             this.uploadFile_button.Name = "uploadFile_button";
-            this.uploadFile_button.Size = new System.Drawing.Size(132, 46);
+            this.uploadFile_button.Size = new System.Drawing.Size(143, 65);
             this.uploadFile_button.TabIndex = 0;
-            this.uploadFile_button.Text = "Upload File";
+            this.uploadFile_button.Text = "Загрузить файл";
             this.uploadFile_button.UseVisualStyleBackColor = false;
+            this.uploadFile_button.Click += new System.EventHandler(this.uploadFile_button_Click);
             // 
             // gist_R_button
             // 
@@ -66,6 +79,7 @@
             this.gist_R_button.TabIndex = 1;
             this.gist_R_button.Text = "R";
             this.gist_R_button.UseVisualStyleBackColor = false;
+            this.gist_R_button.Click += new System.EventHandler(this.gist_R_button_Click);
             // 
             // gist_G_button
             // 
@@ -78,6 +92,7 @@
             this.gist_G_button.TabIndex = 2;
             this.gist_G_button.Text = "G";
             this.gist_G_button.UseVisualStyleBackColor = false;
+            this.gist_G_button.Click += new System.EventHandler(this.gist_G_button_Click);
             // 
             // gist_B_button
             // 
@@ -90,34 +105,36 @@
             this.gist_B_button.TabIndex = 3;
             this.gist_B_button.Text = "B";
             this.gist_B_button.UseVisualStyleBackColor = false;
+            this.gist_B_button.Click += new System.EventHandler(this.gist_B_button_Click);
             // 
-            // gist_Bright_button
+            // gist_Brightness_button
             // 
-            this.gist_Bright_button.BackColor = System.Drawing.Color.DarkOrange;
-            this.gist_Bright_button.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.gist_Bright_button.ForeColor = System.Drawing.Color.Navy;
-            this.gist_Bright_button.Location = new System.Drawing.Point(171, 9);
-            this.gist_Bright_button.Name = "gist_Bright_button";
-            this.gist_Bright_button.Size = new System.Drawing.Size(102, 34);
-            this.gist_Bright_button.TabIndex = 4;
-            this.gist_Bright_button.Text = "Brig";
-            this.gist_Bright_button.UseVisualStyleBackColor = false;
+            this.gist_Brightness_button.BackColor = System.Drawing.Color.DarkOrange;
+            this.gist_Brightness_button.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.gist_Brightness_button.ForeColor = System.Drawing.Color.Navy;
+            this.gist_Brightness_button.Location = new System.Drawing.Point(171, 9);
+            this.gist_Brightness_button.Name = "gist_Brightness_button";
+            this.gist_Brightness_button.Size = new System.Drawing.Size(102, 34);
+            this.gist_Brightness_button.TabIndex = 4;
+            this.gist_Brightness_button.Text = "Bright";
+            this.gist_Brightness_button.UseVisualStyleBackColor = false;
+            this.gist_Brightness_button.Click += new System.EventHandler(this.gist_Brightness_button_Click);
             // 
-            // groupBox1
+            // groupBox_gist
             // 
-            this.groupBox1.Controls.Add(this.gist_Bright_button);
-            this.groupBox1.Controls.Add(this.gist_B_button);
-            this.groupBox1.Controls.Add(this.gist_G_button);
-            this.groupBox1.Controls.Add(this.gist_R_button);
-            this.groupBox1.Location = new System.Drawing.Point(889, 193);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(283, 51);
-            this.groupBox1.TabIndex = 5;
-            this.groupBox1.TabStop = false;
+            this.groupBox_gist.Controls.Add(this.gist_Brightness_button);
+            this.groupBox_gist.Controls.Add(this.gist_B_button);
+            this.groupBox_gist.Controls.Add(this.gist_G_button);
+            this.groupBox_gist.Controls.Add(this.gist_R_button);
+            this.groupBox_gist.Location = new System.Drawing.Point(889, 193);
+            this.groupBox_gist.Name = "groupBox_gist";
+            this.groupBox_gist.Size = new System.Drawing.Size(283, 51);
+            this.groupBox_gist.TabIndex = 5;
+            this.groupBox_gist.TabStop = false;
             // 
             // trackBar_Brightness
             // 
-            this.trackBar_Brightness.BackColor = System.Drawing.Color.Bisque;
+            this.trackBar_Brightness.BackColor = System.Drawing.Color.Linen;
             this.trackBar_Brightness.Location = new System.Drawing.Point(889, 348);
             this.trackBar_Brightness.Maximum = 100;
             this.trackBar_Brightness.Minimum = -100;
@@ -140,7 +157,7 @@
             // 
             // trackBar_Сontrast
             // 
-            this.trackBar_Сontrast.BackColor = System.Drawing.Color.Bisque;
+            this.trackBar_Сontrast.BackColor = System.Drawing.Color.Linen;
             this.trackBar_Сontrast.Location = new System.Drawing.Point(889, 426);
             this.trackBar_Сontrast.Maximum = 100;
             this.trackBar_Сontrast.Minimum = -100;
@@ -161,24 +178,121 @@
             this.label_Сontrast.TabIndex = 9;
             this.label_Сontrast.Text = "Контрастность";
             // 
+            // button_Binarization
+            // 
+            this.button_Binarization.BackColor = System.Drawing.Color.DarkOrange;
+            this.button_Binarization.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button_Binarization.ForeColor = System.Drawing.Color.Navy;
+            this.button_Binarization.Location = new System.Drawing.Point(952, 489);
+            this.button_Binarization.Name = "button_Binarization";
+            this.button_Binarization.Size = new System.Drawing.Size(143, 46);
+            this.button_Binarization.TabIndex = 10;
+            this.button_Binarization.Text = "Бинаризация";
+            this.button_Binarization.UseVisualStyleBackColor = false;
+            this.button_Binarization.Click += new System.EventHandler(this.button_Binarization_Click);
+            // 
+            // button_GrayShades
+            // 
+            this.button_GrayShades.BackColor = System.Drawing.Color.DarkOrange;
+            this.button_GrayShades.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button_GrayShades.ForeColor = System.Drawing.Color.Navy;
+            this.button_GrayShades.Location = new System.Drawing.Point(952, 541);
+            this.button_GrayShades.Name = "button_GrayShades";
+            this.button_GrayShades.Size = new System.Drawing.Size(143, 62);
+            this.button_GrayShades.TabIndex = 11;
+            this.button_GrayShades.Text = "Оттенки серого";
+            this.button_GrayShades.UseVisualStyleBackColor = false;
+            this.button_GrayShades.Click += new System.EventHandler(this.button_GrayShades_Click);
+            // 
+            // button_Negative
+            // 
+            this.button_Negative.BackColor = System.Drawing.Color.DarkOrange;
+            this.button_Negative.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button_Negative.ForeColor = System.Drawing.Color.Navy;
+            this.button_Negative.Location = new System.Drawing.Point(952, 609);
+            this.button_Negative.Name = "button_Negative";
+            this.button_Negative.Size = new System.Drawing.Size(143, 46);
+            this.button_Negative.TabIndex = 12;
+            this.button_Negative.Text = "Негатив";
+            this.button_Negative.UseVisualStyleBackColor = false;
+            this.button_Negative.Click += new System.EventHandler(this.button_Negative_Click);
+            // 
+            // button_Reset
+            // 
+            this.button_Reset.BackColor = System.Drawing.Color.DarkOrange;
+            this.button_Reset.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button_Reset.ForeColor = System.Drawing.Color.Navy;
+            this.button_Reset.Location = new System.Drawing.Point(952, 661);
+            this.button_Reset.Name = "button_Reset";
+            this.button_Reset.Size = new System.Drawing.Size(143, 46);
+            this.button_Reset.TabIndex = 13;
+            this.button_Reset.Text = "Сброс";
+            this.button_Reset.UseVisualStyleBackColor = false;
+            this.button_Reset.Click += new System.EventHandler(this.button_Reset_Click);
+            // 
+            // pictureBox_image
+            // 
+            this.pictureBox_image.Location = new System.Drawing.Point(12, 12);
+            this.pictureBox_image.Name = "pictureBox_image";
+            this.pictureBox_image.Size = new System.Drawing.Size(871, 695);
+            this.pictureBox_image.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox_image.TabIndex = 14;
+            this.pictureBox_image.TabStop = false;
+            // 
+            // trackBar_Сhange
+            // 
+            this.trackBar_Сhange.Location = new System.Drawing.Point(12, 713);
+            this.trackBar_Сhange.Maximum = 100;
+            this.trackBar_Сhange.Name = "trackBar_Сhange";
+            this.trackBar_Сhange.Size = new System.Drawing.Size(871, 45);
+            this.trackBar_Сhange.SmallChange = 5;
+            this.trackBar_Сhange.TabIndex = 15;
+            this.trackBar_Сhange.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+            // 
+            // gist
+            // 
+            this.gist.BackColor = System.Drawing.SystemColors.Control;
+            this.gist.BorderlineColor = System.Drawing.SystemColors.Control;
+            chartArea1.Name = "ChartArea1";
+            this.gist.ChartAreas.Add(chartArea1);
+            this.gist.Location = new System.Drawing.Point(889, 12);
+            this.gist.Name = "gist";
+            this.gist.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Grayscale;
+            series1.ChartArea = "ChartArea1";
+            series1.Name = "Series1";
+            this.gist.Series.Add(series1);
+            this.gist.Size = new System.Drawing.Size(283, 184);
+            this.gist.TabIndex = 16;
+            this.gist.Text = "chart1";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1184, 761);
+            this.Controls.Add(this.gist);
+            this.Controls.Add(this.trackBar_Сhange);
+            this.Controls.Add(this.pictureBox_image);
+            this.Controls.Add(this.button_Reset);
+            this.Controls.Add(this.button_Negative);
+            this.Controls.Add(this.button_GrayShades);
+            this.Controls.Add(this.button_Binarization);
             this.Controls.Add(this.label_Сontrast);
             this.Controls.Add(this.trackBar_Сontrast);
             this.Controls.Add(this.label_Brightness);
             this.Controls.Add(this.trackBar_Brightness);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupBox_gist);
             this.Controls.Add(this.uploadFile_button);
             this.MinimumSize = new System.Drawing.Size(1200, 800);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "KG_5";
-            this.groupBox1.ResumeLayout(false);
+            this.groupBox_gist.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_Brightness)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_Сontrast)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_image)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar_Сhange)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gist)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -190,12 +304,19 @@
         private System.Windows.Forms.Button gist_R_button;
         private System.Windows.Forms.Button gist_G_button;
         private System.Windows.Forms.Button gist_B_button;
-        private System.Windows.Forms.Button gist_Bright_button;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button gist_Brightness_button;
+        private System.Windows.Forms.GroupBox groupBox_gist;
         private System.Windows.Forms.TrackBar trackBar_Brightness;
         private System.Windows.Forms.Label label_Brightness;
         private System.Windows.Forms.TrackBar trackBar_Сontrast;
         private System.Windows.Forms.Label label_Сontrast;
+        private System.Windows.Forms.Button button_Binarization;
+        private System.Windows.Forms.Button button_GrayShades;
+        private System.Windows.Forms.Button button_Negative;
+        private System.Windows.Forms.Button button_Reset;
+        private System.Windows.Forms.PictureBox pictureBox_image;
+        private System.Windows.Forms.TrackBar trackBar_Сhange;
+        private System.Windows.Forms.DataVisualization.Charting.Chart gist;
     }
 }
 
