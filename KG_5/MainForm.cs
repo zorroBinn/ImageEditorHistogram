@@ -43,10 +43,7 @@ namespace KG_5
 
         private void button_GrayShades_Click(object sender, EventArgs e)
         {
-            if (pictureBox_image.Image == null)
-            {
-                return;
-            }
+            if (pictureBox_image.Image == null) return;
             Bitmap originalBitmap = new Bitmap(pictureBox_image.Image);
             Bitmap grayBitmap = new Bitmap(originalBitmap.Width, originalBitmap.Height);
 
@@ -70,19 +67,16 @@ namespace KG_5
             if (originalImage != null)
             {
                 pictureBox_image.Image = (Image)originalImage.Clone();
+                trackBar_Binarization_porog.Value = 128;
+                trackBar_Brightness.Value = 0;
+                trackBar_Сontrast.Value = 0;
             }
-            else
-            {
-                return;
-            }
+            else return;
         }
 
         private void button_Negative_Click(object sender, EventArgs e)
         {
-            if (pictureBox_image.Image == null)
-            {
-                return;
-            }
+            if (pictureBox_image.Image == null) return;
             Bitmap originalBitmap = new Bitmap(pictureBox_image.Image);
             Bitmap negativeBitmap = new Bitmap(originalBitmap.Width, originalBitmap.Height);
 
@@ -104,10 +98,7 @@ namespace KG_5
 
         private void button_Binarization_Click(object sender, EventArgs e)
         {
-            if (pictureBox_image.Image == null)
-            {
-                return;
-            }
+            if (pictureBox_image.Image == null) return;
             Bitmap originalBitmap = new Bitmap(pictureBox_image.Image);
             Bitmap binaryBitmap = new Bitmap(originalBitmap.Width, originalBitmap.Height);
 
@@ -119,7 +110,7 @@ namespace KG_5
                     //Вычисляем значение яркости Y
                     int Y = (int)(0.299 * originalColor.R + 0.587 * originalColor.G + 0.114 * originalColor.B);
                     //Определяем цвет на основе порога
-                    Color binaryColor = Y >= 128 ? Color.White : Color.Black;
+                    Color binaryColor = Y >= trackBar_Binarization_porog.Value ? Color.White : Color.Black;
                     binaryBitmap.SetPixel(x, y, binaryColor);
                 }
             }
@@ -216,7 +207,119 @@ namespace KG_5
             Brightness
         }
 
+        private void trackBar_Binarization_porog_ValueChanged(object sender, EventArgs e)
+        {
+            label_Porog_Count.Text = trackBar_Binarization_porog.Value.ToString();
+        }
 
+        private void trackBar_Brightness_ValueChanged(object sender, EventArgs e)
+        {
+            if (trackBar_Brightness.Value > 0)
+            {
+                label_Bright_Percent.Text = "+" + trackBar_Brightness.Value.ToString() + "%";
+            }
+            else if (trackBar_Brightness.Value < 0)
+            {
+                label_Bright_Percent.Text = trackBar_Brightness.Value.ToString() + "%";
+            }
+            else
+            {
+                label_Bright_Percent.Text = "0";
+            }
+        }
 
+        private void trackBar_Сontrast_ValueChanged(object sender, EventArgs e)
+        {
+            if (trackBar_Сontrast.Value > 0)
+            {
+                label_Contrast_Percent.Text = "+" + trackBar_Сontrast.Value.ToString() + "%";
+            }
+            else if (trackBar_Сontrast.Value < 0)
+            {
+                label_Contrast_Percent.Text = trackBar_Сontrast.Value.ToString() + "%";
+            }
+            else
+            {
+                label_Contrast_Percent.Text = "0";
+            }
+        }
+
+        private void AdjustBrightness(int brightnessPercentage)
+        {
+            if (pictureBox_image.Image == null) return;
+            
+            Bitmap bitmap = new Bitmap(originalImage);
+
+            for (int y = 0; y < bitmap.Height; y++)
+            {
+                for (int x = 0; x < bitmap.Width; x++)
+                {
+                    Color pixelColor = bitmap.GetPixel(x, y);
+                    //Вычисляем значение яркости Y
+                    double Y = 0.299 * pixelColor.R + 0.587 * pixelColor.G + 0.114 * pixelColor.B;
+
+                    //Рассчитываем изменение яркости на указанный процент
+                    double adjustmentFactor = 1 + (brightnessPercentage / 100.0);
+                    double newY = Y * adjustmentFactor;
+                    //Пересчитываем новые значения RGB, сохраняя оттенки
+                    int newR = (int)Math.Max(0, Math.Min(255, pixelColor.R * adjustmentFactor));
+                    int newG = (int)Math.Max(0, Math.Min(255, pixelColor.G * adjustmentFactor));
+                    int newB = (int)Math.Max(0, Math.Min(255, pixelColor.B * adjustmentFactor));
+                    bitmap.SetPixel(x, y, Color.FromArgb(newR, newG, newB));
+                }
+            }
+            pictureBox_image.Image = bitmap;
+        }
+
+        private void trackBar_Brightness_MouseUp(object sender, MouseEventArgs e)
+        {
+            AdjustBrightness(trackBar_Brightness.Value);
+        }
+
+        private void AdjustContrast(int contrastValue)
+        {
+            if (pictureBox_image.Image == null) return;
+
+            Bitmap contrastImage = new Bitmap(originalImage);
+
+            //Вычисляем среднюю яркость (Yav) для всего изображения
+            double totalBrightness = 0;
+            int pixelCount = contrastImage.Width * contrastImage.Height;
+
+            for (int x = 0; x < contrastImage.Width; x++)
+            {
+                for (int y = 0; y < contrastImage.Height; y++)
+                {
+                    Color pixelColor = contrastImage.GetPixel(x, y);
+                    double Y = 0.299 * pixelColor.R + 0.587 * pixelColor.G + 0.114 * pixelColor.B;
+                    totalBrightness += Y;
+                }
+            }
+            double averageBrightness = totalBrightness / pixelCount;
+
+            //Определяем коэффициент контрастности K на основе contrastValue
+            double contrastFactor = 1 + (contrastValue / 100.0);
+
+            for (int x = 0; x < contrastImage.Width; x++)
+            {
+                for (int y = 0; y < contrastImage.Height; y++)
+                {
+                    Color pixelColor = contrastImage.GetPixel(x, y);
+                    //Рассчитываем текущую яркость
+                    double oldY = 0.299 * pixelColor.R + 0.587 * pixelColor.G + 0.114 * pixelColor.B;
+                    // Корректируем каждый канал пропорционально
+                    int newR = Math.Max(0, Math.Min(255, (int)(contrastFactor * (pixelColor.R - averageBrightness) + averageBrightness)));
+                    int newG = Math.Max(0, Math.Min(255, (int)(contrastFactor * (pixelColor.G - averageBrightness) + averageBrightness)));
+                    int newB = Math.Max(0, Math.Min(255, (int)(contrastFactor * (pixelColor.B - averageBrightness) + averageBrightness)));
+                    contrastImage.SetPixel(x, y, Color.FromArgb(newR, newG, newB));
+                }
+            }
+            pictureBox_image.Image = contrastImage;
+        }
+
+        private void trackBar_Сontrast_MouseUp(object sender, MouseEventArgs e)
+        {
+            AdjustContrast(trackBar_Сontrast.Value);
+        }
     }
 }

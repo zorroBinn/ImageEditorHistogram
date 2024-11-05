@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.uploadFile_button = new System.Windows.Forms.Button();
             this.gist_R_button = new System.Windows.Forms.Button();
             this.gist_G_button = new System.Windows.Forms.Button();
@@ -47,12 +47,18 @@
             this.pictureBox_image = new System.Windows.Forms.PictureBox();
             this.trackBar_Сhange = new System.Windows.Forms.TrackBar();
             this.gist = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.trackBar_Binarization_porog = new System.Windows.Forms.TrackBar();
+            this.label_porog = new System.Windows.Forms.Label();
+            this.label_Bright_Percent = new System.Windows.Forms.Label();
+            this.label_Contrast_Percent = new System.Windows.Forms.Label();
+            this.label_Porog_Count = new System.Windows.Forms.Label();
             this.groupBox_gist.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_Brightness)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_Сontrast)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_image)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_Сhange)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gist)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar_Binarization_porog)).BeginInit();
             this.SuspendLayout();
             // 
             // uploadFile_button
@@ -143,6 +149,8 @@
             this.trackBar_Brightness.SmallChange = 5;
             this.trackBar_Brightness.TabIndex = 6;
             this.trackBar_Brightness.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+            this.trackBar_Brightness.ValueChanged += new System.EventHandler(this.trackBar_Brightness_ValueChanged);
+            this.trackBar_Brightness.MouseUp += new System.Windows.Forms.MouseEventHandler(this.trackBar_Brightness_MouseUp);
             // 
             // label_Brightness
             // 
@@ -166,6 +174,8 @@
             this.trackBar_Сontrast.SmallChange = 5;
             this.trackBar_Сontrast.TabIndex = 8;
             this.trackBar_Сontrast.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+            this.trackBar_Сontrast.ValueChanged += new System.EventHandler(this.trackBar_Сontrast_ValueChanged);
+            this.trackBar_Сontrast.MouseUp += new System.Windows.Forms.MouseEventHandler(this.trackBar_Сontrast_MouseUp);
             // 
             // label_Сontrast
             // 
@@ -183,7 +193,7 @@
             this.button_Binarization.BackColor = System.Drawing.Color.DarkOrange;
             this.button_Binarization.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button_Binarization.ForeColor = System.Drawing.Color.Navy;
-            this.button_Binarization.Location = new System.Drawing.Point(952, 489);
+            this.button_Binarization.Location = new System.Drawing.Point(1019, 477);
             this.button_Binarization.Name = "button_Binarization";
             this.button_Binarization.Size = new System.Drawing.Size(143, 46);
             this.button_Binarization.TabIndex = 10;
@@ -196,7 +206,7 @@
             this.button_GrayShades.BackColor = System.Drawing.Color.DarkOrange;
             this.button_GrayShades.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button_GrayShades.ForeColor = System.Drawing.Color.Navy;
-            this.button_GrayShades.Location = new System.Drawing.Point(952, 541);
+            this.button_GrayShades.Location = new System.Drawing.Point(1019, 580);
             this.button_GrayShades.Name = "button_GrayShades";
             this.button_GrayShades.Size = new System.Drawing.Size(143, 62);
             this.button_GrayShades.TabIndex = 11;
@@ -209,7 +219,7 @@
             this.button_Negative.BackColor = System.Drawing.Color.DarkOrange;
             this.button_Negative.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button_Negative.ForeColor = System.Drawing.Color.Navy;
-            this.button_Negative.Location = new System.Drawing.Point(952, 609);
+            this.button_Negative.Location = new System.Drawing.Point(1019, 648);
             this.button_Negative.Name = "button_Negative";
             this.button_Negative.Size = new System.Drawing.Size(143, 46);
             this.button_Negative.TabIndex = 12;
@@ -222,7 +232,7 @@
             this.button_Reset.BackColor = System.Drawing.Color.DarkOrange;
             this.button_Reset.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button_Reset.ForeColor = System.Drawing.Color.Navy;
-            this.button_Reset.Location = new System.Drawing.Point(952, 661);
+            this.button_Reset.Location = new System.Drawing.Point(1019, 700);
             this.button_Reset.Name = "button_Reset";
             this.button_Reset.Size = new System.Drawing.Size(143, 46);
             this.button_Reset.TabIndex = 13;
@@ -253,23 +263,86 @@
             // 
             this.gist.BackColor = System.Drawing.SystemColors.Control;
             this.gist.BorderlineColor = System.Drawing.SystemColors.Control;
-            chartArea1.Name = "ChartArea1";
-            this.gist.ChartAreas.Add(chartArea1);
+            chartArea5.Name = "ChartArea1";
+            this.gist.ChartAreas.Add(chartArea5);
             this.gist.Location = new System.Drawing.Point(889, 12);
             this.gist.Name = "gist";
             this.gist.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Grayscale;
-            series1.ChartArea = "ChartArea1";
-            series1.Name = "Series1";
-            this.gist.Series.Add(series1);
+            series5.ChartArea = "ChartArea1";
+            series5.Name = "Series1";
+            this.gist.Series.Add(series5);
             this.gist.Size = new System.Drawing.Size(283, 184);
             this.gist.TabIndex = 16;
             this.gist.Text = "chart1";
+            // 
+            // trackBar_Binarization_porog
+            // 
+            this.trackBar_Binarization_porog.BackColor = System.Drawing.Color.Linen;
+            this.trackBar_Binarization_porog.LargeChange = 1;
+            this.trackBar_Binarization_porog.Location = new System.Drawing.Point(963, 529);
+            this.trackBar_Binarization_porog.Maximum = 255;
+            this.trackBar_Binarization_porog.Minimum = 1;
+            this.trackBar_Binarization_porog.Name = "trackBar_Binarization_porog";
+            this.trackBar_Binarization_porog.Size = new System.Drawing.Size(209, 45);
+            this.trackBar_Binarization_porog.TabIndex = 17;
+            this.trackBar_Binarization_porog.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+            this.trackBar_Binarization_porog.Value = 128;
+            this.trackBar_Binarization_porog.ValueChanged += new System.EventHandler(this.trackBar_Binarization_porog_ValueChanged);
+            // 
+            // label_porog
+            // 
+            this.label_porog.AutoSize = true;
+            this.label_porog.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label_porog.ForeColor = System.Drawing.Color.Navy;
+            this.label_porog.Location = new System.Drawing.Point(889, 520);
+            this.label_porog.Name = "label_porog";
+            this.label_porog.Size = new System.Drawing.Size(68, 27);
+            this.label_porog.TabIndex = 18;
+            this.label_porog.Text = "Порог";
+            // 
+            // label_Bright_Percent
+            // 
+            this.label_Bright_Percent.AutoSize = true;
+            this.label_Bright_Percent.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label_Bright_Percent.ForeColor = System.Drawing.Color.Navy;
+            this.label_Bright_Percent.Location = new System.Drawing.Point(986, 318);
+            this.label_Bright_Percent.Name = "label_Bright_Percent";
+            this.label_Bright_Percent.Size = new System.Drawing.Size(48, 27);
+            this.label_Bright_Percent.TabIndex = 19;
+            this.label_Bright_Percent.Text = "0 %";
+            // 
+            // label_Contrast_Percent
+            // 
+            this.label_Contrast_Percent.AutoSize = true;
+            this.label_Contrast_Percent.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label_Contrast_Percent.ForeColor = System.Drawing.Color.Navy;
+            this.label_Contrast_Percent.Location = new System.Drawing.Point(1060, 396);
+            this.label_Contrast_Percent.Name = "label_Contrast_Percent";
+            this.label_Contrast_Percent.Size = new System.Drawing.Size(48, 27);
+            this.label_Contrast_Percent.TabIndex = 20;
+            this.label_Contrast_Percent.Text = "0 %";
+            // 
+            // label_Porog_Count
+            // 
+            this.label_Porog_Count.AutoSize = true;
+            this.label_Porog_Count.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label_Porog_Count.ForeColor = System.Drawing.Color.Navy;
+            this.label_Porog_Count.Location = new System.Drawing.Point(898, 547);
+            this.label_Porog_Count.Name = "label_Porog_Count";
+            this.label_Porog_Count.Size = new System.Drawing.Size(48, 27);
+            this.label_Porog_Count.TabIndex = 21;
+            this.label_Porog_Count.Text = "128";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1184, 761);
+            this.Controls.Add(this.label_Porog_Count);
+            this.Controls.Add(this.label_Contrast_Percent);
+            this.Controls.Add(this.label_Bright_Percent);
+            this.Controls.Add(this.label_porog);
+            this.Controls.Add(this.trackBar_Binarization_porog);
             this.Controls.Add(this.gist);
             this.Controls.Add(this.trackBar_Сhange);
             this.Controls.Add(this.pictureBox_image);
@@ -293,6 +366,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_image)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_Сhange)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gist)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar_Binarization_porog)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -317,6 +391,11 @@
         private System.Windows.Forms.PictureBox pictureBox_image;
         private System.Windows.Forms.TrackBar trackBar_Сhange;
         private System.Windows.Forms.DataVisualization.Charting.Chart gist;
+        private System.Windows.Forms.TrackBar trackBar_Binarization_porog;
+        private System.Windows.Forms.Label label_porog;
+        private System.Windows.Forms.Label label_Bright_Percent;
+        private System.Windows.Forms.Label label_Contrast_Percent;
+        private System.Windows.Forms.Label label_Porog_Count;
     }
 }
 
