@@ -14,7 +14,7 @@ namespace KG_5
     public partial class MainForm : Form
     {
         private Image originalImage;
-
+        private ColorChannel? selectedChannel = null;
         public MainForm()
         {
             InitializeComponent();
@@ -32,6 +32,7 @@ namespace KG_5
                         Image loadedImage = new Bitmap(openFileDialog.FileName);
                         originalImage = (Image)loadedImage.Clone();
                         pictureBox_image.Image = loadedImage;
+                        ResetImageState();
                     }
                     catch (Exception)
                     {
@@ -60,18 +61,23 @@ namespace KG_5
                 }
             }
             pictureBox_image.Image = grayBitmap;
+            if (selectedChannel != null) DrawHistogram(selectedChannel.Value);
+        }
+
+        private void ResetImageState()
+        {
+            trackBar_Binarization_porog.Value = 128;
+            trackBar_Brightness.Value = 0;
+            trackBar_Сontrast.Value = 0;
+            if (originalImage != null) pictureBox_image.Image = (Image)originalImage.Clone();
+            gist.Series.Clear();
+            gist.Titles.Clear();
+            selectedChannel = null;
         }
 
         private void button_Reset_Click(object sender, EventArgs e)
         {
-            if (originalImage != null)
-            {
-                pictureBox_image.Image = (Image)originalImage.Clone();
-                trackBar_Binarization_porog.Value = 128;
-                trackBar_Brightness.Value = 0;
-                trackBar_Сontrast.Value = 0;
-            }
-            else return;
+            ResetImageState();
         }
 
         private void button_Negative_Click(object sender, EventArgs e)
@@ -94,6 +100,7 @@ namespace KG_5
                 }
             }
             pictureBox_image.Image = negativeBitmap;
+            if (selectedChannel != null) DrawHistogram(selectedChannel.Value);
         }
 
         private void button_Binarization_Click(object sender, EventArgs e)
@@ -115,26 +122,31 @@ namespace KG_5
                 }
             }
             pictureBox_image.Image = binaryBitmap;
+            if (selectedChannel != null) DrawHistogram(selectedChannel.Value);
         }
 
         private void gist_R_button_Click(object sender, EventArgs e)
         {
             DrawHistogram(ColorChannel.Red);
+            selectedChannel = ColorChannel.Red;
         }
 
         private void gist_G_button_Click(object sender, EventArgs e)
         {
             DrawHistogram(ColorChannel.Green);
+            selectedChannel = ColorChannel.Green;
         }
 
         private void gist_B_button_Click(object sender, EventArgs e)
         {
             DrawHistogram(ColorChannel.Blue);
+            selectedChannel = ColorChannel.Blue;
         }
 
         private void gist_Brightness_button_Click(object sender, EventArgs e)
         {
             DrawHistogram(ColorChannel.Brightness);
+            selectedChannel = ColorChannel.Brightness;
         }
 
         private void DrawHistogram(ColorChannel channel)
@@ -249,7 +261,7 @@ namespace KG_5
             if (pictureBox_image.Image == null) return;
             
             Bitmap bitmap = new Bitmap(originalImage);
-
+            
             for (int y = 0; y < bitmap.Height; y++)
             {
                 for (int x = 0; x < bitmap.Width; x++)
@@ -257,10 +269,8 @@ namespace KG_5
                     Color pixelColor = bitmap.GetPixel(x, y);
                     //Вычисляем значение яркости Y
                     double Y = 0.299 * pixelColor.R + 0.587 * pixelColor.G + 0.114 * pixelColor.B;
-
                     //Рассчитываем изменение яркости на указанный процент
                     double adjustmentFactor = 1 + (brightnessPercentage / 100.0);
-                    double newY = Y * adjustmentFactor;
                     //Пересчитываем новые значения RGB, сохраняя оттенки
                     int newR = (int)Math.Max(0, Math.Min(255, pixelColor.R * adjustmentFactor));
                     int newG = (int)Math.Max(0, Math.Min(255, pixelColor.G * adjustmentFactor));
@@ -269,6 +279,7 @@ namespace KG_5
                 }
             }
             pictureBox_image.Image = bitmap;
+            if (selectedChannel != null) DrawHistogram(selectedChannel.Value);
         }
 
         private void trackBar_Brightness_MouseUp(object sender, MouseEventArgs e)
@@ -280,41 +291,39 @@ namespace KG_5
         {
             if (pictureBox_image.Image == null) return;
 
-            Bitmap contrastImage = new Bitmap(originalImage);
+            Bitmap bitmap = new Bitmap(originalImage);
 
             //Вычисляем среднюю яркость (Yav) для всего изображения
             double totalBrightness = 0;
-            int pixelCount = contrastImage.Width * contrastImage.Height;
+            int pixelCount = bitmap.Width * bitmap.Height;
 
-            for (int x = 0; x < contrastImage.Width; x++)
+            for (int x = 0; x < bitmap.Width; x++)
             {
-                for (int y = 0; y < contrastImage.Height; y++)
+                for (int y = 0; y < bitmap.Height; y++)
                 {
-                    Color pixelColor = contrastImage.GetPixel(x, y);
+                    Color pixelColor = bitmap.GetPixel(x, y);
                     double Y = 0.299 * pixelColor.R + 0.587 * pixelColor.G + 0.114 * pixelColor.B;
                     totalBrightness += Y;
                 }
             }
             double averageBrightness = totalBrightness / pixelCount;
-
             //Определяем коэффициент контрастности K на основе contrastValue
             double contrastFactor = 1 + (contrastValue / 100.0);
 
-            for (int x = 0; x < contrastImage.Width; x++)
+            for (int x = 0; x < bitmap.Width; x++)
             {
-                for (int y = 0; y < contrastImage.Height; y++)
+                for (int y = 0; y < bitmap.Height; y++)
                 {
-                    Color pixelColor = contrastImage.GetPixel(x, y);
-                    //Рассчитываем текущую яркость
-                    double oldY = 0.299 * pixelColor.R + 0.587 * pixelColor.G + 0.114 * pixelColor.B;
+                    Color pixelColor = bitmap.GetPixel(x, y);
                     // Корректируем каждый канал пропорционально
                     int newR = Math.Max(0, Math.Min(255, (int)(contrastFactor * (pixelColor.R - averageBrightness) + averageBrightness)));
                     int newG = Math.Max(0, Math.Min(255, (int)(contrastFactor * (pixelColor.G - averageBrightness) + averageBrightness)));
                     int newB = Math.Max(0, Math.Min(255, (int)(contrastFactor * (pixelColor.B - averageBrightness) + averageBrightness)));
-                    contrastImage.SetPixel(x, y, Color.FromArgb(newR, newG, newB));
+                    bitmap.SetPixel(x, y, Color.FromArgb(newR, newG, newB));
                 }
             }
-            pictureBox_image.Image = contrastImage;
+            pictureBox_image.Image = bitmap;
+            if (selectedChannel != null) DrawHistogram(selectedChannel.Value);
         }
 
         private void trackBar_Сontrast_MouseUp(object sender, MouseEventArgs e)

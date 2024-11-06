@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.uploadFile_button = new System.Windows.Forms.Button();
             this.gist_R_button = new System.Windows.Forms.Button();
             this.gist_G_button = new System.Windows.Forms.Button();
@@ -45,7 +45,6 @@
             this.button_Negative = new System.Windows.Forms.Button();
             this.button_Reset = new System.Windows.Forms.Button();
             this.pictureBox_image = new System.Windows.Forms.PictureBox();
-            this.trackBar_Сhange = new System.Windows.Forms.TrackBar();
             this.gist = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.trackBar_Binarization_porog = new System.Windows.Forms.TrackBar();
             this.label_porog = new System.Windows.Forms.Label();
@@ -56,7 +55,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_Brightness)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_Сontrast)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_image)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar_Сhange)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gist)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_Binarization_porog)).BeginInit();
             this.SuspendLayout();
@@ -244,33 +242,23 @@
             // 
             this.pictureBox_image.Location = new System.Drawing.Point(12, 12);
             this.pictureBox_image.Name = "pictureBox_image";
-            this.pictureBox_image.Size = new System.Drawing.Size(871, 695);
+            this.pictureBox_image.Size = new System.Drawing.Size(871, 737);
             this.pictureBox_image.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox_image.TabIndex = 14;
             this.pictureBox_image.TabStop = false;
-            // 
-            // trackBar_Сhange
-            // 
-            this.trackBar_Сhange.Location = new System.Drawing.Point(12, 713);
-            this.trackBar_Сhange.Maximum = 100;
-            this.trackBar_Сhange.Name = "trackBar_Сhange";
-            this.trackBar_Сhange.Size = new System.Drawing.Size(871, 45);
-            this.trackBar_Сhange.SmallChange = 5;
-            this.trackBar_Сhange.TabIndex = 15;
-            this.trackBar_Сhange.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
             // 
             // gist
             // 
             this.gist.BackColor = System.Drawing.SystemColors.Control;
             this.gist.BorderlineColor = System.Drawing.SystemColors.Control;
-            chartArea5.Name = "ChartArea1";
-            this.gist.ChartAreas.Add(chartArea5);
+            chartArea1.Name = "ChartArea1";
+            this.gist.ChartAreas.Add(chartArea1);
             this.gist.Location = new System.Drawing.Point(889, 12);
             this.gist.Name = "gist";
             this.gist.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Grayscale;
-            series5.ChartArea = "ChartArea1";
-            series5.Name = "Series1";
-            this.gist.Series.Add(series5);
+            series1.ChartArea = "ChartArea1";
+            series1.Name = "Series1";
+            this.gist.Series.Add(series1);
             this.gist.Size = new System.Drawing.Size(283, 184);
             this.gist.TabIndex = 16;
             this.gist.Text = "chart1";
@@ -344,7 +332,6 @@
             this.Controls.Add(this.label_porog);
             this.Controls.Add(this.trackBar_Binarization_porog);
             this.Controls.Add(this.gist);
-            this.Controls.Add(this.trackBar_Сhange);
             this.Controls.Add(this.pictureBox_image);
             this.Controls.Add(this.button_Reset);
             this.Controls.Add(this.button_Negative);
@@ -364,7 +351,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_Brightness)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_Сontrast)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_image)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar_Сhange)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gist)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_Binarization_porog)).EndInit();
             this.ResumeLayout(false);
@@ -389,7 +375,6 @@
         private System.Windows.Forms.Button button_Negative;
         private System.Windows.Forms.Button button_Reset;
         private System.Windows.Forms.PictureBox pictureBox_image;
-        private System.Windows.Forms.TrackBar trackBar_Сhange;
         private System.Windows.Forms.DataVisualization.Charting.Chart gist;
         private System.Windows.Forms.TrackBar trackBar_Binarization_porog;
         private System.Windows.Forms.Label label_porog;
